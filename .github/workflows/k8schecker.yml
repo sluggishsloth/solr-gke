@@ -20,3 +20,19 @@ jobs:
           DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }}
         run: |
           helm datree test ./helm/app -- --values ./helm/adminer.yaml
+  gke:
+    name: Test Helm chart on GKE 
+    needs: datree
+    runs-on: ubuntu-latest
+    env:
+     PROJECT_ID: learning-245417
+     GKE_CLUSTER: arrow-gke
+     GKE_REGION: us-central1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - name: Setup gcloud CLI ⚡
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GKE_SA_KEY }}
+          project_id: ${{ env.PROJECT_ID }}
