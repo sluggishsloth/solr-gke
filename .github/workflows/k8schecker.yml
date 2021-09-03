@@ -3,3 +3,20 @@ on:
   push:
     branches:
       - 'master'
+jobs:
+  datree:
+    name: Validate Helm charts
+    runs-on: ubuntu-latest
+    container:
+      image: dtzar/helm-kubectl:3.6.3
+  steps:
+  - name: Checkout 🛎️
+    uses: actions/checkout@v2
+  - name: Install Datree 🔨
+    run: |
+      helm plugin install https://github.com/datreeio/helm-datree
+  - name: Datree test 🔥
+    env:
+      DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }}
+    run: |
+      helm datree test ./helm/app -- --values ./helm/adminer.yaml
