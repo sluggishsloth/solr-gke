@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: solr-gke
+    meta.helm.sh/release-namespace: solr
+  labels:
+    app.kubernetes.io/component: solr
+    app.kubernetes.io/instance: solr-gke
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: solr
+    helm.sh/chart: solr-1.0.4
+  name: solr-gke-nodeport
+  namespace: solr
+spec:
+  type: NodePort
+  ports:
+  - name: solr-nodeport
+    port: 9003
+    nodePort: 30080
+    protocol: TCP
+    targetPort: solr-client
+  selector:
+    app.kubernetes.io/component: solr
+    app.kubernetes.io/instance: solr-gke
+    app.kubernetes.io/name: solr
+  sessionAffinity: None

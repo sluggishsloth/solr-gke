@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    meta.helm.sh/release-name: solr-gke
+    meta.helm.sh/release-namespace: solr
+  labels:
+    app.kubernetes.io/component: solr
+    app.kubernetes.io/instance: solr-gke
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: solr
+    helm.sh/chart: solr-1.0.4
+  name: solr-ingress
+  namespace: solr
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /solr
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: solr-gke
+            port:
+              number: 8983

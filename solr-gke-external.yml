@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: solr-gke
+    meta.helm.sh/release-namespace: solr
+    networking.gke.io/load-balancer-type: "Internal"
+  labels:
+    app.kubernetes.io/component: solr
+    app.kubernetes.io/instance: solr-gke
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: solr
+    helm.sh/chart: solr-1.0.4
+  name: solr-gke-external
+  namespace: solr
+spec:
+  type: LoadBalancer
+  ports:
+  - name: tcp-client
+    port: 8983
+    protocol: TCP
+    targetPort: solr-client
+  selector:
+    app.kubernetes.io/component: solr
+    app.kubernetes.io/instance: solr-gke
+    app.kubernetes.io/name: solr
+  sessionAffinity: None
