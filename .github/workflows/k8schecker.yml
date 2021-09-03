@@ -1,0 +1,5 @@
+name: Quality check
+on:
+  push:
+    branches:
+      - 'master'
