@@ -10,12 +10,12 @@ jobs:
     container:
       image: dtzar/helm-kubectl:3.6.3
   steps:
-  - name: Checkout 🛎️
+  - name: Checkout
     uses: actions/checkout@v2
-  - name: Install Datree 🔨
+  - name: Install Datree
     run: |
       helm plugin install https://github.com/datreeio/helm-datree
-  - name: Datree test 🔥
+  - name: Datree test
     env:
       DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }}
     run: |
